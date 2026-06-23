@@ -10,9 +10,10 @@ type Producto = {
   mecanismo: string;
   research: string;
   dosis: string;
-  imagen: string; // <-- NUEVO CAMPO PARA LA FOTO
+  imagen: string;
 };
 
+// INFORMACIÓN CLÍNICA LIMPIA
 const PRODUCTOS: Producto[] = [
   { 
     id: 1, 
@@ -176,55 +177,58 @@ export default function Home() {
           <section className="py-12 px-4 container mx-auto max-w-5xl">
             <div className="flex items-center justify-center mb-10">
               <div className="h-[1px] bg-[#D4AF37]/50 flex-1"></div>
-              <h3 className="mx-4 text-xl tracking-widest font-bold text-[#0B1B3D] uppercase">Lista de Precios y Fichas Clínicas</h3>
+              <h3 className="mx-4 text-2xl tracking-widest font-bold text-[#0B1B3D] uppercase">Catálogo Clínico</h3>
               <div className="h-[1px] bg-[#D4AF37]/50 flex-1"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* GRILLA DE PRODUCTOS (Ahora en 1 sola columna para que el diseño horizontal respire bien) */}
+            <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
               {PRODUCTOS.map((prod) => (
-                <div key={prod.id} className="bg-white p-6 rounded-2xl shadow-md border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
-                  <div className="mb-4">
-                    
-                    {/* CONTENEDOR DE LA IMAGEN */}
-                    <div className="w-full h-56 mb-6 flex items-center justify-center bg-gradient-to-tr from-[#E8EEF5] to-white rounded-xl overflow-hidden border border-slate-100 relative">
-                       {/* Si la imagen no carga, mostramos un fallback gris, pero si está, hace zoom al pasar el mouse */}
-                       <img 
-                       src={prod.imagen} 
-                       alt={prod.nombre} 
-                       className="h-40 w-auto object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500 z-10 p-2"
-                       onError={(e) => {
-                       e.currentTarget.src = "https://placehold.co/400x400/E8EEF5/0B1B3D?text=Foto+Pendiente";
-                       }}
-                      />
-                       {/* Decoración de fondo */}
-                       <div className="absolute inset-0 bg-[#D4AF37] opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
-                    </div>
+                <div key={prod.id} className="bg-[#0B1B3D] p-6 rounded-2xl shadow-xl border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:shadow-[0_10px_30px_rgba(212,175,55,0.2)] transition-all duration-300 flex flex-col md:flex-row gap-8 group">
+                  
+                  {/* LADO IZQUIERDO: IMAGEN MÁS CHICA Y DELICADA */}
+                  <div className="w-full md:w-36 h-36 flex-shrink-0 flex items-center justify-center bg-white rounded-xl border-2 border-[#D4AF37]/50 relative overflow-hidden self-start md:mt-2">
+                     <img 
+                        src={prod.imagen} 
+                        alt={prod.nombre} 
+                        className="h-24 w-auto object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500 z-10"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://placehold.co/400x400/FFFFFF/0B1B3D?text=Foto";
+                        }}
+                     />
+                     <div className="absolute inset-0 bg-[#D4AF37] opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+                  </div>
 
-                    <div className="flex justify-between items-start mb-2">
-                      <h4 className="font-bold text-xl text-[#0B1B3D] pr-4 group-hover:text-[#D4AF37] transition-colors">{prod.nombre}</h4>
-                      <span className="font-black text-2xl text-[#0B1B3D] bg-[#D4AF37]/20 px-3 py-1 rounded-md border border-[#D4AF37]/30 shadow-sm">
+                  {/* LADO DERECHO: TEXTOS GRANDES Y BOTONES */}
+                  <div className="flex-1 flex flex-col">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-4">
+                      <h4 className="font-extrabold text-2xl text-[#D4AF37]">{prod.nombre}</h4>
+                      <span className="font-black text-2xl text-white bg-white/10 px-4 py-1 rounded-lg border border-[#D4AF37]/30 shadow-sm self-start">
                         ${prod.precio}
                       </span>
                     </div>
-                    <p className="text-sm text-slate-500 mb-4 font-medium leading-relaxed">{prod.descBreve}</p>
                     
-                    {/* ACORDEÓN CLÍNICO DESPLEGABLE */}
-                    <details className="group/details cursor-pointer outline-none">
-                      <summary className="text-xs font-bold text-[#D4AF37] mb-2 uppercase tracking-wide hover:text-[#0B1B3D] transition-colors list-none flex items-center gap-2">
-                        <span>Ver Ficha Técnica 🔬</span>
-                        <span className="group-open/details:rotate-180 transition-transform">▼</span>
+                    <p className="text-lg text-slate-300 mb-6 font-medium leading-relaxed">{prod.descBreve}</p>
+                    
+                    {/* ACORDEÓN CLÍNICO (Diseño Dark Mode) */}
+                    <details className="group/details cursor-pointer outline-none mb-6">
+                      <summary className="text-sm font-bold text-white mb-2 uppercase tracking-wider hover:text-[#D4AF37] transition-colors list-none flex items-center gap-2 bg-white/5 p-3 rounded-lg border border-white/10">
+                        <span>Ver Ficha Técnica Detallada 🔬</span>
+                        <span className="group-open/details:rotate-180 transition-transform text-[#D4AF37]">▼</span>
                       </summary>
-                      <div className="text-xs text-slate-600 space-y-3 mt-3 bg-slate-50 p-4 rounded-lg border border-slate-100 shadow-inner">
-                        <p><strong className="text-[#0B1B3D]">Mecanismo de Acción:</strong> {prod.mecanismo}</p>
-                        <p><strong className="text-[#0B1B3D]">Research / Evidencia:</strong> {prod.research}</p>
-                        <p><strong className="text-[#0B1B3D]">Protocolo de Dosificación:</strong> {prod.dosis}</p>
+                      <div className="text-sm text-slate-300 space-y-4 mt-2 bg-black/20 p-5 rounded-lg border border-white/5 shadow-inner">
+                        <p><strong className="text-[#D4AF37] block mb-1 text-base">Mecanismo de Acción:</strong> {prod.mecanismo}</p>
+                        <p><strong className="text-[#D4AF37] block mb-1 text-base">Investigación Clínica:</strong> {prod.research}</p>
+                        <p><strong className="text-[#D4AF37] block mb-1 text-base">Dosificación:</strong> {prod.dosis}</p>
                       </div>
                     </details>
+
+                    {/* BOTÓN AL FONDO A LA DERECHA */}
+                    <button onClick={() => agregarAlCarrito(prod)} className="mt-auto self-start sm:self-end border-2 border-[#D4AF37] bg-[#D4AF37] text-[#0B1B3D] font-extrabold py-3 px-8 rounded-xl hover:bg-transparent hover:text-[#D4AF37] transition-all shadow-lg uppercase tracking-wider text-sm flex items-center gap-2">
+                      <span className="text-lg font-black">+</span> Agregar al Pedido
+                    </button>
                   </div>
-                  
-                  <button onClick={() => agregarAlCarrito(prod)} className="w-full border-2 border-[#0B1B3D] text-[#0B1B3D] font-bold py-3 rounded-xl hover:bg-[#0B1B3D] hover:text-white transition-colors shadow-sm uppercase tracking-wide text-sm mt-auto flex justify-center items-center gap-2">
-                    <span>+</span> Agregar al Pedido
-                  </button>
+
                 </div>
               ))}
             </div>
@@ -254,13 +258,12 @@ export default function Home() {
                 {carrito.map((item) => (
                   <div key={item.id} className="p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:bg-[#F9FAFC] transition-colors">
                     <div className="flex-1 flex items-center gap-4">
-                      <div className="w-12 h-12 bg-[#E8EEF5] rounded-lg overflow-hidden flex items-center justify-center border border-slate-200">
-                         {/* Miniatura en el carrito */}
+                      <div className="w-12 h-12 bg-white rounded-lg overflow-hidden flex items-center justify-center border border-slate-200 p-1">
                          <img 
                             src={PRODUCTOS.find(p => p.id === item.id)?.imagen} 
                             alt={item.nombre} 
-                            className="h-full w-auto object-cover"
-                            onError={(e) => e.currentTarget.src = "https://placehold.co/100x100/E8EEF5/0B1B3D?text=Vial"}
+                            className="h-full w-auto object-contain"
+                            onError={(e) => e.currentTarget.src = "https://placehold.co/100x100/FFFFFF/0B1B3D?text=Vial"}
                          />
                       </div>
                       <div>
