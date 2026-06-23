@@ -13,7 +13,7 @@ type Producto = {
   imagen: string;
 };
 
-// INFORMACIÓN CLÍNICA LIMPIA
+// INFORMACIÓN CLÍNICA BASADA EN RXWELLHEALTH
 const PRODUCTOS: Producto[] = [
   { 
     id: 1, 
@@ -81,7 +81,7 @@ const PRODUCTOS: Producto[] = [
     precio: 150, 
     descBreve: "Sinergia de análogo GHRH y optimizador de GHRP.",
     mecanismo: "El Tesamorelin actúa como análogo de GHRH para estimular la liberación de GH, mientras el Ipamorelin optimiza el pulso.",
-    research: "Mezcla equilibrada que ofrece una excelente sinergia para la pérdida de grasa, mejora de la composición corporal y recuperación celular.",
+    research: "Mezcla equilibrada que ofrece una excelente sinergia para la pérdida de grasa, mejora de la composition corporal y recuperación celular.",
     dosis: "Inyectar 30 minutos antes de dormir o al despertar en ayunas, 1 o 2 veces al día. Ciclos de 10 a 16 semanas.",
     imagen: "/tesamorelin.png"
   },
@@ -181,22 +181,22 @@ export default function Home() {
               <div className="h-[1px] bg-[#D4AF37]/50 flex-1"></div>
             </div>
 
-            {/* GRILLA DE PRODUCTOS (Ahora en 1 sola columna para que el diseño horizontal respire bien) */}
+            {/* GRILLA DE PRODUCTOS */}
             <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
               {PRODUCTOS.map((prod) => (
                 <div key={prod.id} className="bg-[#0B1B3D] p-6 rounded-2xl shadow-xl border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:shadow-[0_10px_30px_rgba(212,175,55,0.2)] transition-all duration-300 flex flex-col md:flex-row gap-8 group">
                   
-                  {/* LADO IZQUIERDO: IMAGEN MÁS CHICA Y DELICADA */}
-                  <div className="w-full md:w-36 h-36 flex-shrink-0 flex items-center justify-center bg-white rounded-xl border-2 border-[#D4AF37]/50 relative overflow-hidden self-start md:mt-2">
+                  {/* LADO IZQUIERDO: IMAGEN COMPACTA FIJA (128x128 px) */}
+                  <div className="w-32 h-32 flex-shrink-0 flex items-center justify-center bg-white rounded-xl border-2 border-[#D4AF37]/50 relative overflow-hidden mx-auto md:mx-0 md:mt-2">
                      <img 
                         src={prod.imagen} 
                         alt={prod.nombre} 
-                        className="h-24 w-auto object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-500 z-10"
+                        className="w-full h-full object-contain p-3 drop-shadow-md group-hover:scale-110 transition-transform duration-500 z-10"
                         onError={(e) => {
                           e.currentTarget.src = "https://placehold.co/400x400/FFFFFF/0B1B3D?text=Foto";
                         }}
                      />
-                     <div className="absolute inset-0 bg-[#D4AF37] opacity-0 group-hover:opacity-10 transition-opacity duration-500"></div>
+                     <div className="absolute inset-0 bg-[#D4AF37] opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"></div>
                   </div>
 
                   {/* LADO DERECHO: TEXTOS GRANDES Y BOTONES */}
@@ -210,7 +210,7 @@ export default function Home() {
                     
                     <p className="text-lg text-slate-300 mb-6 font-medium leading-relaxed">{prod.descBreve}</p>
                     
-                    {/* ACORDEÓN CLÍNICO (Diseño Dark Mode) */}
+                    {/* ACORDEÓN CLÍNICO */}
                     <details className="group/details cursor-pointer outline-none mb-6">
                       <summary className="text-sm font-bold text-white mb-2 uppercase tracking-wider hover:text-[#D4AF37] transition-colors list-none flex items-center gap-2 bg-white/5 p-3 rounded-lg border border-white/10">
                         <span>Ver Ficha Técnica Detallada 🔬</span>
