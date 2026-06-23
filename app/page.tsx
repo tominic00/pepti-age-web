@@ -2,22 +2,91 @@
 
 import { useState } from "react";
 
+// Nueva estructura de base de datos con rigor clínico
 type Producto = {
   id: number;
   nombre: string;
   precio: number;
-  desc: string;
+  descBreve: string;
+  mecanismo: string;
+  research: string;
+  dosis: string;
 };
 
+// INFORMACIÓN EXTRAÍDA ESTRICTAMENTE DEL CATÁLOGO CLÍNICO DE RXWELLHEALTH
 const PRODUCTOS: Producto[] = [
-  { id: 1, nombre: "Retatrutide 10mg", precio: 190, desc: "Péptido metabólico de máxima eficiencia." },
-  { id: 2, nombre: "Retatrutide 30mg", precio: 360, desc: "Péptido metabólico (Alta concentración)." },
-  { id: 3, nombre: "CJC-1295 / Ipamorelin 5mg/5mg", precio: 120, desc: "Estimulación de GH, sueño y recuperación." },
-  { id: 4, nombre: "Glow (GHK-Cu / BPC-157 / TB-500)", precio: 190, desc: "Regeneración celular, piel y articulaciones." },
-  { id: 5, nombre: "Mots-C 40mg", precio: 160, desc: "Energía mitocondrial y rendimiento físico." },
-  { id: 6, nombre: "BPC-157 / TB-500 10mg/10mg", precio: 160, desc: "Recuperación acelerada de lesiones y tejidos." },
-  { id: 7, nombre: "Tesamorelin / Ipamorelin 10mg/10mg", precio: 150, desc: "Pérdida de grasa localizada y anti-aging." },
-  { id: 8, nombre: "Bac Water 30ml", precio: 30, desc: "Agua bacteriostática para reconstitución." },
+  { 
+    id: 1, 
+    nombre: "Retatrutide 10mg", 
+    precio: 190, 
+    descBreve: "Agonista triple para control de peso avanzado[cite: 1].",
+    mecanismo: "Activa los receptores GLP-1, GIP y de glucagón para un enfoque de triple objetivo[cite: 1].",
+    research: "Apoya la pérdida de grasa significativa, la optimización metabólica y la regulación del apetito[cite: 1]. Estudiado como uno de los péptidos más efectivos, especialmente para pacientes estancados con terapias GLP-1 o agonistas duales[cite: 1].",
+    dosis: "Dosis inicial de 0.5mg una vez a la semana, con aumento de 0.5-1mg cada 2-4 semanas[cite: 1]. Mantenimiento típico de 1mg a 3mg semanales[cite: 1]. Reconstituir con agua bacteriostática[cite: 1]."
+  },
+  { 
+    id: 2, 
+    nombre: "Retatrutide 30mg", 
+    precio: 360, 
+    descBreve: "Agonista triple (Alta concentración)[cite: 1].",
+    mecanismo: "Activa los receptores GLP-1, GIP y de glucagón para un enfoque de triple objetivo[cite: 1].",
+    research: "Apoya la pérdida de grasa significativa, la optimización metabólica y la regulación del apetito[cite: 1]. Estudiado como uno de los péptidos más efectivos, especialmente para pacientes estancados con terapias GLP-1 o agonistas duales[cite: 1].",
+    dosis: "Dosis inicial de 0.5mg una vez a la semana, con aumento de 0.5-1mg cada 2-4 semanas[cite: 1]. Mantenimiento típico de 1mg a 3mg semanales[cite: 1]. Reconstituir con agua bacteriostática[cite: 1]."
+  },
+  { 
+    id: 3, 
+    nombre: "CJC-1295 / Ipamorelin 5mg/5mg", 
+    precio: 120, 
+    descBreve: "Combinación de análogo sintético de GHRH y GHRP[cite: 1].",
+    mecanismo: "El CJC-1295 (sin DAC) estimula la liberación natural de hormona de crecimiento (GH) desde la pituitaria imitando los patrones naturales[cite: 1].",
+    research: "Diseñado para brindar una mayor amplitud de GHRH con menor carga de GHRP[cite: 1]. Apoya la pérdida de grasa o recuperación sin un exceso de sangrado de GH o picos de cortisol[cite: 1].",
+    dosis: "1 a 3 veces por día con el estómago vacío (ideal 30 min antes de comer o 90 min después)[cite: 1]. Ciclos recomendados de 8 a 12 semanas[cite: 1]."
+  },
+  { 
+    id: 4, 
+    nombre: "Glow (GHK-Cu / BPC-157 / TB-500)", 
+    precio: 190, 
+    descBreve: "Stack regenerativo y de recuperación cosmética[cite: 1].",
+    mecanismo: "Combina el poder curativo de BPC-157 y TB-500 con los efectos anti-envejecimiento y regenerativos del péptido de cobre GHK-Cu[cite: 1].",
+    research: "Promueve la reparación de tejidos, la síntesis de colágeno, la mejora del tono de piel, el crecimiento capilar y una curación más rápida de heridas[cite: 1].",
+    dosis: "Vía subcutánea o intradérmica[cite: 1]. 1 vez al día para mantenimiento; 2 veces al día para curación activa o post-procedimiento[cite: 1]. Ciclos de 8 a 12 semanas[cite: 1]."
+  },
+  { 
+    id: 5, 
+    nombre: "MOTS-c 40mg", 
+    precio: 160, 
+    descBreve: "Péptido derivado de las mitocondrias para energía celular[cite: 1].",
+    mecanismo: "Juega un papel clave en la regulación de la energía celular y la optimización metabólica[cite: 1]. Mejora el metabolismo de la glucosa e incrementa la sensibilidad a la insulina[cite: 1].",
+    research: "Utilizado para la pérdida de grasa, apoyo en el síndrome metabólico y anti-envejecimiento[cite: 1]. Particularmente efectivo combinado con protocolos de entrenamiento activo[cite: 1].",
+    dosis: "5 a 15mg por dosis, 2 a 3 veces por semana[cite: 1]. Inyectar preferentemente por la mañana o pre-entrenamiento[cite: 1]."
+  },
+  { 
+    id: 6, 
+    nombre: "Wolverine (BPC-157 / TB-500)", 
+    precio: 160, 
+    descBreve: "Fórmula de recuperación integral y reparación de tejidos[cite: 1].",
+    mecanismo: "El BPC-157 provee reparación localizada mientras el TB-500 ofrece recuperación sistémica y angiogénesis (formación de vasos sanguíneos)[cite: 1].",
+    research: "Diseñado para la reparación acelerada de tejidos y tendones, reducción de la inflamación y una curación más rápida post-lesión o cirugía[cite: 1].",
+    dosis: "1 a 2 veces al día (AM y PM para curación aguda)[cite: 1]. Vía subcutánea cerca de la lesión o intramuscular[cite: 1]. Ciclos de 4 a 6 semanas[cite: 1]."
+  },
+  { 
+    id: 7, 
+    nombre: "Tesamorelin / Ipamorelin 10mg/10mg", 
+    precio: 150, 
+    descBreve: "Sinergia de análogo GHRH y optimizador de GHRP[cite: 1].",
+    mecanismo: "El Tesamorelin actúa como análogo de GHRH para estimular la liberación de GH, mientras el Ipamorelin optimiza el pulso[cite: 1].",
+    research: "Mezcla equilibrada que ofrece una excelente sinergia para la pérdida de grasa, mejora de la composición corporal y recuperación celular[cite: 1].",
+    dosis: "Inyectar 30 minutos antes de dormir o al despertar en ayunas, 1 o 2 veces al día[cite: 1]. Ciclos de 10 a 16 semanas[cite: 1]."
+  },
+  { 
+    id: 8, 
+    nombre: "Agua Bacteriostática 30ml", 
+    precio: 30, 
+    descBreve: "Solución estéril esencial para reconstitución[cite: 1].",
+    mecanismo: "Agua esterilizada con un preservante antimicrobiano[cite: 1].",
+    research: "Requerida universalmente para preparar y preservar los viales de péptidos liofilizados antes de su administración[cite: 1].",
+    dosis: "El volumen de reconstitución varía según el tamaño del vial para mantener una dosificación simple (ej. 2mL a 3mL típicamente)[cite: 1]."
+  },
 ];
 
 export default function Home() {
@@ -54,7 +123,6 @@ export default function Home() {
 
   const comprarPorWhatsApp = () => {
     if (carrito.length === 0) return;
-
     const numeroWhatsApp = "5493815450641"; 
     
     let mensaje = "🔬 *NUEVO PEDIDO - PEPTI AGE* 🔬%0A%0A";
@@ -67,37 +135,27 @@ export default function Home() {
   };
 
   return (
-    // Acá cambiamos el fondo general a un tono azul-grisáceo muy premium (#F4F7FB)
     <main className="min-h-screen bg-[#F4F7FB] font-sans text-[#0B1B3D] pb-12">
       
       {/* BARRA DE NAVEGACIÓN */}
       <header className="bg-[#0B1B3D] text-white py-4 shadow-xl border-b-2 border-[#D4AF37] sticky top-0 z-50">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <button 
-            onClick={() => setVista("tienda")} 
-            className="text-2xl md:text-3xl font-bold tracking-widest text-[#D4AF37] bg-transparent border-none cursor-pointer drop-shadow-md"
-          >
+          <button onClick={() => setVista("tienda")} className="text-2xl md:text-3xl font-bold tracking-widest text-[#D4AF37] bg-transparent border-none cursor-pointer drop-shadow-md">
             PEPTI AGE
           </button>
           
           <div className="flex items-center gap-4">
             <p className="hidden md:block text-xs tracking-[0.2em] opacity-90">CIENCIA • BIENESTAR</p>
-            <button 
-              onClick={() => setVista(vista === "tienda" ? "carrito" : "tienda")}
-              className="bg-[#D4AF37] text-[#0B1B3D] px-4 py-2 rounded-full font-extrabold text-sm flex items-center gap-2 shadow-lg hover:scale-105 transition-transform border border-white/20"
-            >
+            <button onClick={() => setVista(vista === "tienda" ? "carrito" : "tienda")} className="bg-[#D4AF37] text-[#0B1B3D] px-4 py-2 rounded-full font-extrabold text-sm flex items-center gap-2 shadow-lg hover:scale-105 transition-transform border border-white/20">
               <span>{vista === "tienda" ? "🛒 Ver Carrito" : "🔬 Ver Productos"}</span> ({cantidadItems})
             </button>
           </div>
         </div>
       </header>
 
-      {/* ========================================= */}
       {/* VISTA A: CATÁLOGO DE PRODUCTOS */}
-      {/* ========================================= */}
       {vista === "tienda" && (
         <>
-          {/* Portada con gradiente elegante */}
           <section className="bg-gradient-to-b from-[#E8EEF5] to-[#F4F7FB] py-16 px-4 text-center border-b border-[#D4AF37]/20">
             <h2 className="text-3xl md:text-5xl font-extrabold mb-4 text-[#0B1B3D] drop-shadow-sm">
               Tu mejor versión <span className="text-[#D4AF37]">comienza hoy.</span>
@@ -111,27 +169,37 @@ export default function Home() {
           <section className="py-12 px-4 container mx-auto max-w-5xl">
             <div className="flex items-center justify-center mb-10">
               <div className="h-[1px] bg-[#D4AF37]/50 flex-1"></div>
-              <h3 className="mx-4 text-xl tracking-widest font-bold text-[#0B1B3D] uppercase">Lista de Precios</h3>
+              <h3 className="mx-4 text-xl tracking-widest font-bold text-[#0B1B3D] uppercase">Lista de Precios y Fichas Clínicas</h3>
               <div className="h-[1px] bg-[#D4AF37]/50 flex-1"></div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {PRODUCTOS.map((prod) => (
                 <div key={prod.id} className="bg-white p-6 rounded-xl shadow-md border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
-                  <div>
+                  <div className="mb-4">
                     <div className="flex justify-between items-start mb-2">
                       <h4 className="font-bold text-lg text-[#0B1B3D] pr-4 group-hover:text-[#D4AF37] transition-colors">{prod.nombre}</h4>
                       <span className="font-extrabold text-xl text-[#0B1B3D] bg-[#D4AF37]/20 px-3 py-1 rounded-md border border-[#D4AF37]/30">
                         ${prod.precio}
                       </span>
                     </div>
-                    <p className="text-sm text-slate-500 mb-6">{prod.desc}</p>
+                    <p className="text-sm text-slate-500 mb-4 font-medium">{prod.descBreve}</p>
+                    
+                    {/* ACORDEÓN CLÍNICO DESPLEGABLE */}
+                    <details className="group/details cursor-pointer outline-none">
+                      <summary className="text-xs font-bold text-[#D4AF37] mb-2 uppercase tracking-wide hover:text-[#0B1B3D] transition-colors list-none flex items-center gap-2">
+                        <span>Ver Ficha Técnica 🔬</span>
+                        <span className="group-open/details:rotate-180 transition-transform">▼</span>
+                      </summary>
+                      <div className="text-xs text-slate-600 space-y-3 mt-3 bg-slate-50 p-4 rounded-lg border border-slate-100 shadow-inner">
+                        <p><strong className="text-[#0B1B3D]">Mecanismo de Acción:</strong> {prod.mecanismo}</p>
+                        <p><strong className="text-[#0B1B3D]">Research / Evidencia:</strong> {prod.research}</p>
+                        <p><strong className="text-[#0B1B3D]">Protocolo de Dosificación:</strong> {prod.dosis}</p>
+                      </div>
+                    </details>
                   </div>
                   
-                  <button 
-                    onClick={() => agregarAlCarrito(prod)}
-                    className="w-full border-2 border-[#0B1B3D] text-[#0B1B3D] font-bold py-2 rounded-lg hover:bg-[#0B1B3D] hover:text-white transition-colors shadow-sm"
-                  >
+                  <button onClick={() => agregarAlCarrito(prod)} className="w-full border-2 border-[#0B1B3D] text-[#0B1B3D] font-bold py-3 rounded-lg hover:bg-[#0B1B3D] hover:text-white transition-colors shadow-sm uppercase tracking-wide text-sm mt-auto">
                     + Agregar al Pedido
                   </button>
                 </div>
@@ -141,29 +209,19 @@ export default function Home() {
         </>
       )}
 
-      {/* ========================================= */}
       {/* VISTA B: PÁGINA DEL CARRITO DE COMPRAS */}
-      {/* ========================================= */}
       {vista === "carrito" && (
         <section className="py-12 px-4 container mx-auto max-w-3xl min-h-[60vh]">
-          
-          <button 
-            onClick={() => setVista("tienda")}
-            className="text-sm font-bold text-[#D4AF37] hover:text-[#0B1B3D] transition-colors mb-6 flex items-center gap-2 bg-transparent border-none cursor-pointer"
-          >
-            ← Volver a la Lista de Productos (Agregar más)
+          <button onClick={() => setVista("tienda")} className="text-sm font-bold text-[#D4AF37] hover:text-[#0B1B3D] transition-colors mb-6 flex items-center gap-2 bg-transparent border-none cursor-pointer">
+            ← Volver a la Lista de Productos
           </button>
-
           <h2 className="text-3xl font-extrabold text-[#0B1B3D] mb-8 drop-shadow-sm">Tu Carrito de Pedido</h2>
 
           {carrito.length === 0 ? (
             <div className="bg-white p-12 rounded-2xl shadow-md border border-[#D4AF37]/20 text-center text-slate-400">
               <span className="text-6xl block mb-4">🛒</span>
               <p className="text-lg font-bold mb-4">Tu pedido está completamente vacío.</p>
-              <button 
-                onClick={() => setVista("tienda")}
-                className="bg-[#0B1B3D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#0B1B3D]/90 shadow-lg"
-              >
+              <button onClick={() => setVista("tienda")} className="bg-[#0B1B3D] text-white font-bold py-3 px-8 rounded-lg hover:bg-[#0B1B3D]/90 shadow-lg">
                 Explorar Péptidos
               </button>
             </div>
@@ -176,18 +234,15 @@ export default function Home() {
                       <h4 className="font-bold text-base text-[#0B1B3D]">{item.nombre}</h4>
                       <p className="text-[#D4AF37] font-extrabold text-sm mt-0.5">U$S {item.precio} c/u</p>
                     </div>
-                    
                     <div className="flex items-center justify-between sm:justify-end gap-6">
                       <div className="flex items-center border border-slate-300 rounded-lg bg-white shadow-sm">
                         <button onClick={() => avanzarRestarCantidad(item.id)} className="px-3 py-1.5 text-slate-500 hover:bg-slate-100 font-bold rounded-l-lg">-</button>
                         <span className="px-3 font-bold text-sm min-w-8 text-center text-[#0B1B3D]">{item.cantidad}</span>
                         <button onClick={() => sumarCantidad(item.id)} className="px-3 py-1.5 text-slate-500 hover:bg-slate-100 font-bold rounded-r-lg">+</button>
                       </div>
-                      
                       <div className="text-right min-w-[70px]">
                         <p className="font-extrabold text-[#0B1B3D] text-lg">U$S {item.precio * item.cantidad}</p>
                       </div>
-
                       <button onClick={() => eliminarProducto(item.id)} className="text-red-400 hover:text-red-600 p-2 bg-red-50 hover:bg-red-100 rounded-md transition-colors border-none cursor-pointer">
                         🗑️
                       </button>
@@ -195,17 +250,12 @@ export default function Home() {
                   </div>
                 ))}
               </div>
-
               <div className="bg-white p-6 rounded-2xl shadow-md border border-[#D4AF37]/30">
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-slate-500 font-bold text-lg">Total del Pedido:</span>
                   <span className="text-3xl font-black text-[#0B1B3D]">U$S {totalCarrito}</span>
                 </div>
-                
-                <button 
-                  onClick={comprarPorWhatsApp}
-                  className="w-full bg-[#25D366] text-white font-extrabold text-xl py-4 rounded-xl shadow-lg hover:bg-[#20b858] transition-all flex items-center justify-center gap-3 border-none cursor-pointer hover:scale-[1.02]"
-                >
+                <button onClick={comprarPorWhatsApp} className="w-full bg-[#25D366] text-white font-extrabold text-xl py-4 rounded-xl shadow-lg hover:bg-[#20b858] transition-all flex items-center justify-center gap-3 border-none cursor-pointer hover:scale-[1.02]">
                   <span>📲</span> CONTINUAR COMPRA POR WHATSAPP
                 </button>
                 <p className="text-xs text-center text-slate-400 mt-4 font-medium">
@@ -245,7 +295,6 @@ export default function Home() {
           No son medicamentos. Uso exclusivo para profesionales.
         </p>
       </footer>
-
     </main>
   );
 }
