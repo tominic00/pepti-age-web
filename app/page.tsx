@@ -2,6 +2,20 @@
 
 import { useState, useEffect } from "react";
 
+// Inyección de estilos de tipografías premium para el laboratorio
+const EstilosTipografia = () => (
+  <style jsx global>{`
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+    
+    .font-lab-titulo {
+      font-family: 'Playfair Display', serif;
+    }
+    .font-lab-texto {
+      font-family: 'Inter', sans-serif;
+    }
+  `}</style>
+);
+
 type Producto = {
   id: number;
   nombre: string;
@@ -15,7 +29,6 @@ type Producto = {
   imagen: string;
 };
 
-// BASE DE DATOS OFICIAL CON STOCK REAL E INDICADOR DE DESTACADOS
 const PRODUCTOS: Producto[] = [
   { 
     id: 1, 
@@ -81,7 +94,7 @@ const PRODUCTOS: Producto[] = [
     id: 6, 
     nombre: "Wolverine (BPC-157 / TB-500)", 
     precio: 160, 
-    stock: 0, // Sin stock para simular el cartel "Out of Stock" de LionElite
+    stock: 0, 
     destacado: true,
     descBreve: "Complejo avanzado para la reparación acelerada del sistema osteoarticular y conectivo.",
     mecanismo: "Modulación de las vías inflamatorias y estímulo de la angiogénesis para la formación de nuevos vasos sanguíneos en tejidos de baja irrigación.",
@@ -123,7 +136,6 @@ export default function Home() {
 
   const destacados = PRODUCTOS.filter(p => p.destacado);
 
-  // Auto-reproducción del carrusel de destacados estilo LionElite
   useEffect(() => {
     if (vista === "inicio") {
       const interval = setInterval(() => {
@@ -142,7 +154,7 @@ export default function Home() {
       }
       return [...prev, { id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 }];
     });
-    alert(`✅ ¡Agregaste ${producto.nombre} al carrito!`);
+    alert(`✅ ¡Agregaste ${producto.nombre} al pedido!`);
   };
 
   const verDetalleProducto = (producto: Producto) => {
@@ -176,111 +188,109 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#050F24] font-sans text-slate-100 pb-12 relative overflow-x-hidden selection:bg-[#D4AF37]/30">
+    <main className="min-h-screen bg-[#050F24] font-lab-texto text-slate-100 pb-20 relative overflow-x-hidden selection:bg-[#D4AF37]/30">
+      <EstilosTipografia />
       
-      {/* GLOW ATMOSFÉRICO AMBIENTAL */}
-      <div className="absolute top-[-5%] left-[-10%] w-[700px] h-[700px] bg-[#D4AF37]/5 rounded-full blur-[150px] pointer-events-none"></div>
-      <div className="absolute top-[30%] right-[-15%] w-[600px] h-[600px] bg-[#0B1B3D]/30 rounded-full blur-[180px] pointer-events-none"></div>
-
-      {/* MENÚ DE NAVEGACIÓN MODERNO */}
-      <header className="bg-[#050F24]/90 backdrop-blur-md text-white py-5 sticky top-0 z-50 border-b border-white/5">
+      {/* MENÚ DE NAVEGACIÓN TOTALMENTE EN ESPAÑOL */}
+      <header className="bg-[#050F24]/90 backdrop-blur-md text-white py-6 sticky top-0 z-50 border-b border-white/10 shadow-2xl">
         <div className="container mx-auto max-w-5xl px-6 flex justify-between items-center">
-          <button onClick={() => setVista("inicio")} className="text-2xl md:text-3xl font-serif font-bold tracking-[0.2em] text-[#D4AF37] bg-transparent border-none cursor-pointer">
+          <button onClick={() => setVista("inicio")} className="text-2xl md:text-3xl font-lab-titulo font-bold tracking-[0.2em] text-[#D4AF37] bg-transparent border-none cursor-pointer">
             PEPTI AGE
           </button>
           
-          <nav className="hidden md:flex items-center gap-8 text-xs tracking-[0.2em] uppercase font-light text-slate-300">
-            <button onClick={() => setVista("inicio")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "inicio" ? "text-[#D4AF37] font-normal" : ""}`}>Home</button>
-            <button onClick={() => setVista("catalogo")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "catalogo" ? "text-[#D4AF37] font-normal" : ""}`}>Products</button>
-            <button onClick={() => setVista("about")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "about" ? "text-[#D4AF37] font-normal" : ""}`}>About Us</button>
-            <button onClick={() => setVista("contacto")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "contacto" ? "text-[#D4AF37] font-normal" : ""}`}>Contact</button>
+          <nav className="hidden md:flex items-center gap-10 text-xs tracking-[0.25em] uppercase font-medium text-slate-300">
+            <button onClick={() => setVista("inicio")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "inicio" ? "text-[#D4AF37]" : ""}`}>Inicio</button>
+            <button onClick={() => setVista("catalogo")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "catalogo" ? "text-[#D4AF37]" : ""}`}>Productos</button>
+            <button onClick={() => setVista("about")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "about" ? "text-[#D4AF37]" : ""}`}>Nosotros</button>
+            <button onClick={() => setVista("contacto")} className={`bg-transparent border-none cursor-pointer hover:text-[#D4AF37] transition-colors ${vista === "contacto" ? "text-[#D4AF37]" : ""}`}>Contacto</button>
           </nav>
           
-          <button onClick={() => setVista("carrito")} className="bg-transparent text-white hover:text-[#050F24] hover:bg-[#D4AF37] px-5 py-2 rounded font-medium text-xs tracking-widest uppercase border border-[#D4AF37] transition-all duration-300 flex items-center gap-2">
-            🛒 CART ({cantidadItems})
+          <button onClick={() => setVista("carrito")} className="bg-transparent text-[#D4AF37] hover:text-[#050F24] hover:bg-[#D4AF37] px-6 py-2.5 rounded font-semibold text-xs tracking-widest uppercase border border-[#D4AF37] transition-all duration-300 flex items-center gap-2">
+            🛒 PEDIDO ({cantidadItems})
           </button>
         </div>
       </header>
 
-      {/* SECCIÓN NAV PARA MÓVILES */}
-      <div className="md:hidden bg-[#0A1630] py-3 px-6 flex justify-around border-b border-white/5 text-[10px] uppercase tracking-wider font-light text-slate-400">
-        <button onClick={() => setVista("inicio")} className="bg-transparent border-none">Home</button>
-        <button onClick={() => setVista("catalogo")} className="bg-transparent border-none">Products</button>
-        <button onClick={() => setVista("about")} className="bg-transparent border-none">About</button>
-        <button onClick={() => setVista("contacto")} className="bg-transparent border-none">Contact</button>
+      {/* MENÚ MÓVIL EN ESPAÑOL */}
+      <div className="md:hidden bg-[#0A1630] py-4 px-6 flex justify-around border-b border-white/10 text-xs tracking-wider font-medium text-slate-300">
+        <button onClick={() => setVista("inicio")} className="bg-transparent border-none">Inicio</button>
+        <button onClick={() => setVista("catalogo")} className="bg-transparent border-none">Productos</button>
+        <button onClick={() => setVista("about")} className="bg-transparent border-none">Nosotros</button>
+        <button onClick={() => setVista("contacto")} className="bg-transparent border-none">Contacto</button>
       </div>
 
-      {/* ==================== VISTA 1: HOME (INICIO) ==================== */}
+      {/* ==================== VISTA 1: INICIO ==================== */}
       {vista === "inicio" && (
         <>
-          {/* HERO BANNER */}
-          <section className="py-24 px-6 text-center max-w-4xl mx-auto relative">
-            <h1 className="text-4xl md:text-7xl font-serif font-medium mb-6 tracking-wide text-white leading-tight">
-              PEPTI AGE <span className="text-[#D4AF37] block mt-2 font-light italic text-3xl md:text-5xl tracking-[0.1em]">MOLECULAR WELLNESS</span>
+          {/* SECCIÓN BIENVENIDA */}
+          <section className="py-28 px-6 text-center max-w-4xl mx-auto relative space-y-6">
+            <h1 className="text-4xl md:text-7xl font-lab-titulo font-bold tracking-wide text-white leading-tight">
+              PEPTI AGE <span className="text-[#D4AF37] block mt-3 font-normal italic text-2xl md:text-5xl tracking-[0.15em]">BIENESTAR MOLECULAR</span>
             </h1>
-            <p className="text-base md:text-xl max-w-2xl mx-auto text-slate-400 font-light leading-relaxed mb-8">
-              Premium grade liofilizados de máxima pureza para optimización biológica y desarrollo celular.
+            <p className="text-base md:text-xl max-w-2xl mx-auto text-slate-300 font-light leading-relaxed">
+              Péptidos liofilizados de grado de investigación con estándares de máxima pureza para optimización biológica.
             </p>
-            <button onClick={() => setVista("catalogo")} className="bg-[#D4AF37] text-[#050F24] font-semibold tracking-widest text-xs uppercase px-8 py-3.5 rounded shadow-xl hover:bg-transparent hover:text-white border border-[#D4AF37] transition-all duration-300">
-              Explore Products
-            </button>
+            <div className="pt-4">
+              <button onClick={() => setVista("catalogo")} className="bg-[#D4AF37] text-[#050F24] font-semibold tracking-widest text-xs uppercase px-10 py-4 rounded shadow-xl hover:bg-transparent hover:text-white border border-[#D4AF37] transition-all duration-300">
+                Ver Catálogo Oficial
+              </button>
+            </div>
           </section>
 
-          {/* COMPONENTE PRINCIPAL: POR QUÉ ELEGIRNOS */}
-          <section className="py-16 bg-[#08142D]/50 border-y border-white/5 px-6">
-            <div className="container mx-auto max-w-5xl text-center">
-              <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-3">Why Choose Us</span>
-              <h2 className="text-2xl md:text-4xl font-serif font-light tracking-wide text-white mb-12">RESEARCH EXCELLENCE</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5">
-                  <span className="text-2xl mb-3 block">💎</span>
-                  <h4 className="font-serif text-lg text-[#D4AF37] mb-2 font-medium">99%+ Purity Guaranteed</h4>
-                  <p className="text-sm text-slate-400 font-light leading-relaxed">Cada lote es sometido a rigurosos análisis de espectrometría de masas y HPLC de laboratorios externos certificados.</p>
+          {/* SECCIÓN: POR QUÉ ELEGIRNOS */}
+          <section className="py-24 bg-[#08142D] border-y border-white/10 px-6">
+            <div className="container mx-auto max-w-5xl text-center space-y-4">
+              <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block">Beneficios de Laboratorio</span>
+              <h2 className="text-3xl md:text-5xl font-lab-titulo font-light tracking-wide text-white mb-16">EXCELENCIA EN INVESTIGACIÓN</h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-left pt-6">
+                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-3 shadow-xl">
+                  <span className="text-3xl block mb-2">💎</span>
+                  <h4 className="font-lab-titulo text-xl text-[#D4AF37] font-semibold">Pureza 99%+ Garantizada</h4>
+                  <p className="text-sm text-slate-300 font-light leading-relaxed">Cada lote es sometido a estrictos análisis analíticos de espectrometría de masas y HPLC en laboratorios externos certificados.</p>
                 </div>
-                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5">
-                  <span className="text-2xl mb-3 block">🏅</span>
-                  <h4 className="font-serif text-lg text-[#D4AF37] mb-2 font-medium">Direct USA Import</h4>
-                  <p className="text-sm text-slate-400 font-light leading-relaxed">Distribución oficial directa en el país, almacenada en condiciones óptimas de cadena de frío constante.</p>
+                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-3 shadow-xl">
+                  <span className="text-3xl block mb-2">📦</span>
+                  <h4 className="font-lab-titulo text-xl text-[#D4AF37] font-semibold">Importación Directa USA</h4>
+                  <p className="text-sm text-slate-300 font-light leading-relaxed">Distribución e importación directa, resguardada de manera estricta bajo protocolos de cadena de frío continuo.</p>
                 </div>
-                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5">
-                  <span className="text-2xl mb-3 block">📜</span>
-                  <h4 className="font-serif text-lg text-[#D4AF37] mb-2 font-medium">Full Lab Certified</h4>
-                  <p className="text-sm text-slate-400 font-light leading-relaxed">Transparencia analítica completa. Fichas de composición real basadas estrictamente en literatura científica internacional.</p>
+                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-3 shadow-xl">
+                  <span className="text-3xl block mb-2">🔬</span>
+                  <h4 className="font-lab-titulo text-xl text-[#D4AF37] font-semibold">Certificación Científica</h4>
+                  <p className="text-sm text-slate-300 font-light leading-relaxed">Transparencia absoluta. Fichas descriptivas y especificaciones basadas rigurosamente en literatura científica internacional.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* COMPONENTE PRINCIPAL: CARRUSEL DE DESTACADOS */}
-          <section className="py-20 px-6 container mx-auto max-w-4xl text-center">
-            <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-3">Featured</span>
-            <h2 className="text-2xl md:text-3xl font-serif font-light text-white mb-10">POPULAR COMPOUNDS</h2>
+          {/* SECCIÓN: CARRUSEL DE COMPUESTOS DESTACADOS */}
+          <section className="py-24 px-6 container mx-auto max-w-4xl text-center space-y-4">
+            <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block">Selección Especial</span>
+            <h2 className="text-3xl md:text-4xl font-lab-titulo font-light text-white mb-12">COMPUESTOS DESTACADOS</h2>
             
-            {/* CUADRO DINÁMICO DEL CARRUSEL */}
-            <div className="bg-[#0A1630] p-8 rounded-2xl border border-[#D4AF37]/30 shadow-2xl flex flex-col md:flex-row items-center gap-8 text-left relative transition-all duration-500">
+            <div className="bg-[#0A1630] p-8 md:p-10 rounded-2xl border border-[#D4AF37]/30 shadow-2xl flex flex-col md:flex-row items-center gap-10 text-left relative transition-all duration-500">
               <div className="w-40 h-40 flex-shrink-0 bg-white rounded-xl p-3 flex items-center justify-center border border-[#D4AF37]/40 shadow-xl">
                 <img src={destacados[indexCarrusel].imagen} alt={destacados[indexCarrusel].nombre} className="h-full w-auto object-contain" />
               </div>
-              <div className="flex-1">
-                <div className="flex justify-between items-baseline mb-2">
-                  <h3 className="font-serif text-2xl font-medium text-white">{destacados[indexCarrusel].nombre}</h3>
-                  <span className="text-[#D4AF37] font-mono text-xl font-light">${destacados[indexCarrusel].precio}</span>
+              <div className="flex-1 space-y-3">
+                <div className="flex justify-between items-baseline gap-4">
+                  <h3 className="font-lab-titulo text-2xl font-bold text-[#D4AF37]">{destacados[indexCarrusel].nombre}</h3>
+                  <span className="text-white font-mono text-xl font-medium whitespace-nowrap">U$S {destacados[indexCarrusel].precio}</span>
                 </div>
-                <p className="text-slate-300 text-base font-light leading-relaxed mb-6">{destacados[indexCarrusel].descBreve}</p>
-                <div className="flex gap-4">
-                  <button onClick={() => verDetalleProducto(destacados[indexCarrusel])} className="bg-transparent hover:bg-white/5 text-white py-2 px-5 rounded border border-white/20 text-xs tracking-widest uppercase transition-colors">
-                    View Details
+                <p className="text-slate-200 text-base font-normal leading-relaxed">{destacados[indexCarrusel].descBreve}</p>
+                <div className="flex gap-4 pt-4">
+                  <button onClick={() => verDetalleProducto(destacados[indexCarrusel])} className="bg-transparent hover:bg-white/5 text-white py-2.5 px-6 rounded border border-white/30 text-xs tracking-widest uppercase transition-colors">
+                    Ver Detalles Completos
                   </button>
-                  <button onClick={() => agregarAlCarrito(destacados[indexCarrusel])} className="bg-[#D4AF37] text-[#050F24] font-semibold py-2 px-5 rounded text-xs tracking-widest uppercase hover:opacity-90 transition-opacity">
-                    Add To Cart
+                  <button onClick={() => agregarAlCarrito(destacados[indexCarrusel])} className="bg-[#D4AF37] text-[#050F24] font-bold py-2.5 px-6 rounded text-xs tracking-widest uppercase hover:opacity-90 transition-opacity border-none cursor-pointer">
+                    Agregar al Pedido
                   </button>
                 </div>
               </div>
               
-              {/* SELECTORES DE NAVEGACIÓN DEL CARRUSEL */}
               <div className="absolute bottom-4 right-6 flex gap-2">
                 {destacados.map((_, i) => (
-                  <button key={i} onClick={() => setIndexCarrusel(i)} className={`w-2 h-2 rounded-full p-0 border-none cursor-pointer transition-all ${i === indexCarrusel ? "bg-[#D4AF37] w-4" : "bg-white/20"}`}></button>
+                  <button key={i} onClick={() => setIndexCarrusel(i)} className={`w-2.5 h-2.5 rounded-full p-0 border-none cursor-pointer transition-all ${i === indexCarrusel ? "bg-[#D4AF37] w-5" : "bg-white/20"}`}></button>
                 ))}
               </div>
             </div>
@@ -290,47 +300,45 @@ export default function Home() {
 
       {/* ==================== VISTA 2: CATÁLOGO CON STOCK INCLUIDO ==================== */}
       {vista === "catalogo" && (
-        <section className="py-20 px-6 container mx-auto max-w-4xl">
-          <div className="text-center mb-16">
-            <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-3">Catalog</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-light text-white">ALL RESEARCH PEPTIDES</h2>
+        <section className="py-24 px-6 container mx-auto max-w-4xl space-y-12">
+          <div className="text-center">
+            <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Gama de Investigación</span>
+            <h2 className="text-3xl md:text-5xl font-lab-titulo font-light text-white">TODOS LOS PÉPTIDOS</h2>
           </div>
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-8">
             {PRODUCTOS.map((prod) => (
-              <div key={prod.id} className="bg-[#0A1630]/60 backdrop-blur-sm p-6 rounded-xl border border-white/5 hover:border-[#D4AF37]/30 transition-all duration-500 flex flex-col md:flex-row gap-6 items-center group relative overflow-hidden">
+              <div key={prod.id} className="bg-[#0A1630]/70 backdrop-blur-sm p-6 rounded-2xl border border-white/10 flex flex-col md:flex-row gap-8 items-center group shadow-xl">
                 
-                {/* RECUADRO IMAGEN */}
-                <div onClick={() => verDetalleProducto(prod)} className="w-32 h-32 flex-shrink-0 flex items-center justify-center bg-white rounded-xl border border-white/10 relative overflow-hidden p-2 cursor-pointer group-hover:border-[#D4AF37]/40 transition-colors">
-                   <img src={prod.imagen} alt={prod.nombre} className="h-24 w-auto object-contain drop-shadow-md group-hover:scale-105 transition-transform duration-500" />
+                <div onClick={() => verDetalleProducto(prod)} className="w-36 h-36 flex-shrink-0 flex items-center justify-center bg-white rounded-xl border border-white/20 p-2 cursor-pointer relative group-hover:border-[#D4AF37]/50 transition-colors">
+                   <img src={prod.imagen} alt={prod.nombre} className="h-28 w-auto object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-105" />
                 </div>
 
-                {/* CONTENIDO */}
-                <div className="flex-1 w-full flex flex-col text-left">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-2 mb-2">
-                    <h4 onClick={() => verDetalleProducto(prod)} className="font-serif text-2xl font-medium text-white hover:text-[#D4AF37] cursor-pointer transition-colors">{prod.nombre}</h4>
+                <div className="flex-1 w-full flex flex-col text-left space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+                    <h4 onClick={() => verDetalleProducto(prod)} className="font-lab-titulo text-2xl font-bold text-[#D4AF37] hover:underline cursor-pointer transition-all">{prod.nombre}</h4>
                     <div className="flex items-center gap-4 self-start sm:self-auto">
                       {prod.stock === 0 ? (
-                        <span className="text-[10px] tracking-widest uppercase font-semibold text-red-400 bg-red-400/10 px-2 py-0.5 rounded border border-red-400/20">Out of Stock</span>
+                        <span className="text-[10px] tracking-widest uppercase font-bold text-red-400 bg-red-400/10 px-2.5 py-1 rounded border border-red-400/30">Sin Stock</span>
                       ) : (
-                        <span className="text-[10px] tracking-widest uppercase font-semibold text-emerald-400 bg-emerald-400/10 px-2 py-0.5 rounded border border-emerald-400/20">In Stock ({prod.stock})</span>
+                        <span className="text-[10px] tracking-widest uppercase font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded border border-emerald-400/30">Disponible ({prod.stock})</span>
                       )}
-                      <span className="font-mono text-xl text-[#D4AF37]">${prod.precio}</span>
+                      <span className="font-mono text-xl font-medium text-white">U$S {prod.precio}</span>
                     </div>
                   </div>
                   
-                  <p className="text-slate-300 text-base font-light leading-relaxed mb-4">{prod.descBreve}</p>
+                  <p className="text-slate-200 text-base font-normal leading-relaxed">{prod.descBreve}</p>
                   
-                  <div className="flex justify-between items-center mt-auto gap-4">
-                    <button onClick={() => verDetalleProducto(prod)} className="text-xs font-medium text-slate-400 hover:text-white transition-colors uppercase tracking-wider bg-transparent border-none cursor-pointer">
-                      View Full Specs →
+                  <div className="flex justify-between items-center pt-2 gap-4">
+                    <button onClick={() => verDetalleProducto(prod)} className="text-xs font-semibold text-slate-400 hover:text-white transition-colors uppercase tracking-wider bg-transparent border-none cursor-pointer">
+                      Ver Especificaciones Ficha →
                     </button>
                     <button 
                       onClick={() => agregarAlCarrito(prod)} 
                       disabled={prod.stock === 0}
-                      className={`font-semibold py-2 px-6 rounded text-xs tracking-widest uppercase transition-all border ${prod.stock === 0 ? "border-white/10 text-slate-600 bg-transparent cursor-not-allowed" : "border-[#D4AF37] bg-[#D4AF37] text-[#050F24] hover:bg-transparent hover:text-[#D4AF37]"}`}
+                      className={`font-bold py-2.5 px-6 rounded text-xs tracking-widest uppercase transition-all border ${prod.stock === 0 ? "border-white/10 text-slate-600 bg-transparent cursor-not-allowed" : "border-[#D4AF37] bg-[#D4AF37] text-[#050F24] hover:bg-transparent hover:text-[#D4AF37]"}`}
                     >
-                      {prod.stock === 0 ? "Sold Out" : "Add to Cart"}
+                      {prod.stock === 0 ? "Agotado" : "Añadir al Pedido"}
                     </button>
                   </div>
                 </div>
@@ -341,61 +349,59 @@ export default function Home() {
         </section>
       )}
 
-      {/* ==================== VISTA 3: PAGINA DE DETALLE INDIVIDUAL COMPLETA ==================== */}
+      {/* ==================== VISTA 3: FICHA DE DETALLE INDIVIDUAL COMPLETA ==================== */}
       {vista === "detalle" && productoSeleccionado && (
-        <section className="py-20 px-6 container mx-auto max-w-4xl animate-fadeIn">
-          <button onClick={() => setVista("catalogo")} className="text-xs font-medium tracking-widest text-[#D4AF37] hover:text-white uppercase transition-colors mb-10 bg-transparent border-none cursor-pointer">
-            ← Back to Catalog
+        <section className="py-24 px-6 container mx-auto max-w-4xl">
+          <button onClick={() => setVista("catalogo")} className="text-xs font-semibold tracking-widest text-[#D4AF37] hover:text-white uppercase transition-colors mb-8 bg-transparent border-none cursor-pointer">
+            ← Volver al Catálogo
           </button>
 
-          <div className="bg-[#0A1630] p-8 rounded-2xl border border-[#D4AF37]/20 shadow-2xl space-y-10">
-            {/* CABECERA DE DETALLE */}
-            <div className="flex flex-col md:flex-row gap-10 items-center md:items-start border-b border-white/5 pb-10">
-              <div className="w-56 h-56 bg-white rounded-xl flex items-center justify-center border-2 border-[#D4AF37]/30 p-4 shadow-2xl flex-shrink-0">
+          <div className="bg-[#0A1630] p-8 md:p-10 rounded-2xl border border-white/10 shadow-2xl space-y-10">
+            <div className="flex flex-col md:flex-row gap-10 items-center md:items-start border-b border-white/10 pb-10">
+              <div className="w-52 h-56 bg-white rounded-xl flex items-center justify-center border border-white/20 p-4 shadow-xl flex-shrink-0">
                 <img src={productoSeleccionado.imagen} alt={productoSeleccionado.nombre} className="h-full w-auto object-contain" />
               </div>
               <div className="flex-1 w-full space-y-4 text-left">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-                  <h2 className="text-3xl md:text-4xl font-serif font-medium text-white">{productoSeleccionado.nombre}</h2>
-                  <span className="text-[#D4AF37] font-mono text-3xl font-light">${productoSeleccionado.precio}</span>
+                  <h2 className="text-3xl md:text-4xl font-lab-titulo font-bold text-[#D4AF37]">{productoSeleccionado.nombre}</h2>
+                  <span className="text-white font-mono text-3xl font-medium">U$S {productoSeleccionado.precio}</span>
                 </div>
-                <div className="pt-1">
+                <div>
                   {productoSeleccionado.stock === 0 ? (
-                    <span className="text-xs tracking-widest uppercase font-semibold text-red-400 bg-red-400/10 px-3 py-1 rounded border border-red-400/20">Out of Stock</span>
+                    <span className="text-xs tracking-widest uppercase font-bold text-red-400 bg-red-400/10 px-3 py-1 rounded border border-red-400/20">Agotado Temporalmente</span>
                   ) : (
-                    <span className="text-xs tracking-widest uppercase font-semibold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded border border-emerald-400/20">Available Supply: {productoSeleccionado.stock} units</span>
+                    <span className="text-xs tracking-widest uppercase font-bold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded border border-emerald-400/20">Unidades en Reserva Logística: {productoSeleccionado.stock}</span>
                   )}
                 </div>
-                <p className="text-slate-300 text-lg font-light leading-relaxed pt-2">{productoSeleccionado.descBreve}</p>
+                <p className="text-slate-200 text-lg font-normal leading-relaxed pt-2">{productoSeleccionado.descBreve}</p>
                 <div className="pt-4">
                   <button 
                     onClick={() => agregarAlCarrito(productoSeleccionado)} 
                     disabled={productoSeleccionado.stock === 0}
-                    className={`w-full sm:w-auto font-semibold py-3.5 px-10 rounded text-xs tracking-widest uppercase transition-all ${productoSeleccionado.stock === 0 ? "bg-white/5 text-slate-500 cursor-not-allowed border border-white/5" : "bg-[#D4AF37] text-[#050F24] hover:bg-transparent hover:text-[#D4AF37] border border-[#D4AF37]"}`}
+                    className={`w-full sm:w-auto font-bold py-3.5 px-10 rounded text-xs tracking-widest uppercase transition-all ${productoSeleccionado.stock === 0 ? "bg-white/5 text-slate-500 cursor-not-allowed border border-white/5" : "bg-[#D4AF37] text-[#050F24] hover:bg-transparent hover:text-[#D4AF37] border border-[#D4AF37]"}`}
                   >
-                    {productoSeleccionado.stock === 0 ? "Out of Stock" : "Add compound to cart"}
+                    {productoSeleccionado.stock === 0 ? "Sin Suministro" : "Reservar este compuesto"}
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* ESPECIFICACIONES CLÍNICAS COMPLETAS Y EXPANDIDAS */}
-            <div className="text-left space-y-8 pt-4">
-              <div>
-                <h4 className="text-xs tracking-[0.2em] font-semibold text-[#D4AF37] uppercase mb-2">Molecular Mechanism of Action</h4>
-                <div className="bg-[#050F24] p-5 rounded-xl border border-white/5 text-base text-slate-300 font-light leading-relaxed shadow-inner">
+            <div className="text-left space-y-8 pt-2">
+              <div className="space-y-2">
+                <h4 className="text-xs tracking-[0.25em] font-semibold text-[#D4AF37] uppercase">Mecanismo Molecular de Acción</h4>
+                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base text-slate-200 font-light leading-relaxed">
                   {productoSeleccionado.mecanismo}
                 </div>
               </div>
-              <div>
-                <h4 className="text-xs tracking-[0.2em] font-semibold text-[#D4AF37] uppercase mb-2">Research Overview & Clinical Data</h4>
-                <div className="bg-[#050F24] p-5 rounded-xl border border-white/5 text-base text-slate-300 font-light leading-relaxed shadow-inner">
+              <div className="space-y-2">
+                <h4 className="text-xs tracking-[0.25em] font-semibold text-[#D4AF37] uppercase">Información de Investigación y Datos Clínicos</h4>
+                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base text-slate-200 font-light leading-relaxed">
                   {productoSeleccionado.research}
                 </div>
               </div>
-              <div>
-                <h4 className="text-xs tracking-[0.2em] font-semibold text-[#D4AF37] uppercase mb-2">Reconstitution & Dosing Protocol Guidelines</h4>
-                <div className="bg-[#050F24] p-5 rounded-xl border border-white/5 text-base text-slate-300 font-light leading-relaxed shadow-inner">
+              <div className="space-y-2">
+                <h4 className="text-xs tracking-[0.25em] font-semibold text-[#D4AF37] uppercase">Pautas de Reconstitución y Protocolo de Dosificación</h4>
+                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base text-slate-200 font-light leading-relaxed">
                   {productoSeleccionado.dosis}
                 </div>
               </div>
@@ -404,114 +410,116 @@ export default function Home() {
         </section>
       )}
 
-      {/* ==================== VISTA 4: PÁGINA ABOUT US ==================== */}
+      {/* ==================== VISTA 4: NOSOTROS ==================== */}
       {vista === "about" && (
-        <section className="py-20 px-6 container mx-auto max-w-3xl text-left animate-fadeIn">
+        <section className="py-24 px-6 container mx-auto max-w-3xl text-left">
           <div className="text-center mb-12">
-            <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-3">About Us</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-light text-white">WHO WE ARE</h2>
+            <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Trayectoria y Confianza</span>
+            <h2 className="text-3xl md:text-5xl font-lab-titulo font-light text-white">QUIÉNES SOMOS</h2>
           </div>
-          <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/5 space-y-6 text-slate-300 font-light text-base leading-relaxed shadow-2xl">
+          <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/10 space-y-6 text-slate-200 font-normal text-base leading-relaxed shadow-2xl">
             <p>
-              En <strong className="text-white font-medium">Pepti Age</strong> nos dedicamos a proveer péptidos de grado de investigación de la más alta pureza internacional, actuando como el nexo logístico de laboratorios líderes en Estados Unidos como <strong className="text-[#D4AF37]">RxWellHealth</strong>.
+              En <strong className="text-white font-medium">Pepti Age</strong> nos dedicamos a la distribución de péptidos liofilizados de grado de investigación con los más altos estándares de pureza del mercado, actuando como canal logístico directo de laboratorios consolidados en Estados Unidos como <strong className="text-[#D4AF37]">RxWellHealth</strong>.
             </p>
             <p>
-              Creemos firmemente que el acceso a compuestos avanzados para la optimización metabólica y celular debe estar respaldado por la transparencia absoluta. Por eso, no añadimos rellenos ni alteramos las formulaciones originales; entregamos ciencia molecular pura.
+              Nuestra misión principal es brindar herramientas confiables y transparentes para la comunidad científica y de salud en Argentina. No añadimos rellenos, aditivos ni alteramos las composiciones originales de fábrica; entregamos pureza biológica bajo auditoría médica constante.
             </p>
-            <div className="grid grid-cols-2 gap-4 text-center pt-6 border-t border-white/5">
-              <div className="p-4 bg-[#050F24] rounded-xl border border-white/5">
-                <span className="text-2xl font-serif font-bold text-[#D4AF37]">99.8%</span>
-                <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider">Pureza Media</p>
+            <div className="grid grid-cols-2 gap-4 text-center pt-6 border-t border-white/10">
+              <div className="p-5 bg-[#050F24] rounded-xl border border-white/5">
+                <span className="text-2xl font-lab-titulo font-bold text-[#D4AF37]">99.8%</span>
+                <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">Pureza Analítica</p>
               </div>
-              <div className="p-4 bg-[#050F24] rounded-xl border border-white/5">
-                <span className="text-2xl font-serif font-bold text-[#D4AF37]">100%</span>
-                <p className="text-xs text-slate-400 mt-1 uppercase tracking-wider">USA Certified</p>
+              <div className="p-5 bg-[#050F24] rounded-xl border border-white/5">
+                <span className="text-2xl font-lab-titulo font-bold text-[#D4AF37]">100%</span>
+                <p className="text-[10px] text-slate-400 mt-1 uppercase tracking-wider">Origen Certificado</p>
               </div>
             </div>
           </div>
         </section>
       )}
 
-      {/* ==================== VISTA 5: PÁGINA DE CONTACTO ==================== */}
+      {/* ==================== VISTA 5: CONTACTO ==================== */}
       {vista === "contacto" && (
-        <section className="py-20 px-6 container mx-auto max-w-xl text-left animate-fadeIn">
+        <section className="py-24 px-6 container mx-auto max-w-xl text-left">
           <div className="text-center mb-12">
-            <span className="text-[10px] tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-3">Contact</span>
-            <h2 className="text-3xl md:text-4xl font-serif font-light text-white">CONNECT WITH US</h2>
+            <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Canal Abierto</span>
+            <h2 className="text-3xl md:text-5xl font-lab-titulo font-light text-white">COMUNICATE CON NOSOTROS</h2>
           </div>
-          <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/5 space-y-6 shadow-2xl">
-            <p className="text-slate-300 font-light text-center leading-relaxed text-sm">
-              Si sos profesional de la salud, investigador o necesitas soporte técnico con la dosificación y distribución masiva, comunícate directamente por nuestros canales oficiales.
+          <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/10 space-y-6 shadow-2xl">
+            <p className="text-slate-200 font-normal text-center leading-relaxed text-sm">
+              Si sos profesional de la salud, investigador científico o necesitas asistencia logística masiva con la adquisición y dosificación, ponte en contacto directo con nuestros asesores.
             </p>
-            <div className="space-y-4 pt-4">
+            <div className="space-y-4 pt-2">
               <div className="flex items-center gap-4 p-4 bg-[#050F24] rounded-xl border border-white/5">
                 <span className="text-xl">📲</span>
                 <div>
-                  <h5 className="text-[#D4AF37] font-medium text-xs uppercase tracking-wider">Canal Oficial WhatsApp</h5>
+                  <h5 className="text-[#D4AF37] font-semibold text-xs uppercase tracking-wider">Soporte WhatsApp Oficial</h5>
                   <p className="text-white text-sm font-mono font-light">+54 9 381 545-0641</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-4 bg-[#050F24] rounded-xl border border-white/5">
                 <span className="text-xl">📍</span>
                 <div>
-                  <h5 className="text-[#D4AF37] font-medium text-xs uppercase tracking-wider">Distribución Central</h5>
+                  <h5 className="text-[#D4AF37] font-semibold text-xs uppercase tracking-wider">Puntos de Distribución</h5>
                   <p className="text-slate-300 text-sm font-light">Tucumán / Buenos Aires, Argentina</p>
                 </div>
               </div>
             </div>
-            <button onClick={() => window.open("https://wa.me/5493815450641", "_blank")} className="w-full mt-4 bg-[#D4AF37] text-[#050F24] font-semibold text-xs tracking-[0.2em] py-4 rounded uppercase transition-opacity hover:opacity-90 border-none cursor-pointer">
-              Open WhatsApp Chat
-            </button>
+            <div className="pt-2">
+              <button onClick={() => window.open("https://wa.me/5493815450641", "_blank")} className="w-full bg-[#D4AF37] text-[#050F24] font-bold text-xs tracking-[0.2em] py-4 rounded uppercase border-none cursor-pointer hover:opacity-90 transition-opacity">
+                Abrir Mensaje de WhatsApp
+              </button>
+            </div>
           </div>
         </section>
       )}
 
-      {/* ==================== VISTA 6: CARRITO DE COMPRAS REFINADO ==================== */}
+      {/* ==================== VISTA 6: CARRITO DE COMPRAS ==================== */}
       {vista === "carrito" && (
-        <section className="py-20 px-6 container mx-auto max-w-2xl min-h-[60vh] text-left animate-fadeIn">
-          <button onClick={() => setVista("catalogo")} className="text-xs font-medium tracking-widest text-[#D4AF37] hover:text-white uppercase transition-colors mb-8 bg-transparent border-none cursor-pointer">
-            ← Back to Catalog
+        <section className="py-24 px-6 container mx-auto max-w-2xl min-h-[60vh] text-left">
+          <button onClick={() => setVista("catalogo")} className="text-xs font-semibold tracking-widest text-[#D4AF37] hover:text-white uppercase transition-colors mb-8 bg-transparent border-none cursor-pointer">
+            ← Volver a Productos
           </button>
-          <h2 className="text-2xl md:text-3xl font-serif font-medium tracking-wide text-white mb-8">Your Cart Selection</h2>
+          <h2 className="text-3xl font-lab-titulo font-bold text-white mb-8">Tu Selección de Pedido</h2>
 
           {carrito.length === 0 ? (
-            <div className="bg-[#0A1630] p-12 rounded-xl border border-white/5 text-center text-slate-500 shadow-xl">
-              <p className="text-base font-light mb-6">Your scientific order is empty.</p>
-              <button onClick={() => setVista("catalogo")} className="bg-transparent text-[#D4AF37] hover:text-[#050F24] hover:bg-[#D4AF37] font-medium py-2.5 px-6 rounded border border-[#D4AF37] text-xs tracking-widest uppercase transition-all">
-                Explore Compounds
+            <div className="bg-[#0A1630] p-12 rounded-xl border border-white/10 text-center text-slate-400 shadow-xl">
+              <p className="text-base font-light mb-6">Tu carrito científico se encuentra vacío.</p>
+              <button onClick={() => setVista("catalogo")} className="bg-transparent text-[#D4AF37] hover:text-[#050F24] hover:bg-[#D4AF37] font-semibold py-2.5 px-6 rounded border border-[#D4AF37] text-xs tracking-widest uppercase transition-all">
+                Explorar Compuestos
               </button>
             </div>
           ) : (
             <div className="space-y-6">
-              <div className="bg-[#0A1630] rounded-xl border border-white/5 divide-y divide-white/5 overflow-hidden shadow-2xl">
+              <div className="bg-[#0A1630] rounded-xl border border-white/10 divide-y divide-white/10 overflow-hidden shadow-2xl">
                 {carrito.map((item) => (
-                  <div key={item.id} className="p-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:bg-white/[0.01] transition-colors">
+                  <div key={item.id} className="p-5 flex flex-col sm:flex-row justify-between sm:items-center gap-4 hover:bg-white/[0.01] transition-colors">
                     <div>
-                      <h4 className="font-serif text-lg text-white tracking-wide">{item.nombre}</h4>
-                      <p className="text-[#D4AF37] font-mono text-xs mt-0.5">U$S {item.precio} unit</p>
+                      <h4 className="font-lab-titulo text-lg font-bold text-white tracking-wide">{item.nombre}</h4>
+                      <p className="text-[#D4AF37] font-mono text-xs mt-0.5">U$S {item.precio} por unidad</p>
                     </div>
                     <div className="flex items-center justify-between sm:justify-end gap-6">
-                      <div className="flex items-center border border-white/10 rounded bg-black/20 text-xs font-mono">
-                        <button onClick={() => avanzarRestarCantidad(item.id)} className="px-2.5 py-1 text-slate-500 hover:text-white transition-colors font-bold">-</button>
-                        <span className="px-2 font-bold text-slate-300 min-w-6 text-center">{item.cantidad}</span>
-                        <button onClick={() => sumarCantidad(item.id)} className="px-2.5 py-1 text-slate-500 hover:text-white transition-colors font-bold">+</button>
+                      <div className="flex items-center border border-white/20 rounded bg-black/20 text-xs font-mono">
+                        <button onClick={() => avanzarRestarCantidad(item.id)} className="px-3 py-1 text-slate-400 hover:text-white transition-colors font-bold bg-transparent border-none cursor-pointer">-</button>
+                        <span className="px-2 font-bold text-slate-200 min-w-6 text-center">{item.cantidad}</span>
+                        <button onClick={() => sumarCantidad(item.id)} className="px-3 py-1 text-slate-400 hover:text-white transition-colors font-bold bg-transparent border-none cursor-pointer">+</button>
                       </div>
                       <p className="font-mono text-white text-base min-w-[70px] text-right">U$S {item.precio * item.cantidad}</p>
-                      <button onClick={() => eliminarProducto(item.id)} className="text-red-400/70 hover:text-red-400 text-xs bg-transparent border-none cursor-pointer uppercase tracking-wider">
-                        Delete
+                      <button onClick={() => eliminarProducto(item.id)} className="text-red-400/80 hover:text-red-400 text-xs bg-transparent border-none cursor-pointer uppercase tracking-wider font-semibold">
+                        Quitar
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
 
-              <div className="bg-[#0A1630] p-6 rounded-xl border border-white/5 shadow-2xl">
+              <div className="bg-[#0A1630] p-6 rounded-xl border border-white/10 shadow-2xl">
                 <div className="flex justify-between items-center mb-6">
-                  <span className="text-slate-400 text-sm tracking-widest uppercase">Order Total:</span>
+                  <span className="text-slate-400 text-sm tracking-widest uppercase font-medium">Total de la Orden:</span>
                   <span className="text-2xl font-mono text-[#D4AF37]">U$S {totalCarrito}</span>
                 </div>
-                <button onClick={comprarPorWhatsApp} className="w-full bg-[#D4AF37] text-[#050F24] font-semibold text-xs tracking-[0.2em] py-4 rounded hover:opacity-90 transition-opacity uppercase text-center flex items-center justify-center gap-2 border-none cursor-pointer">
-                  📲 Submit Order via WhatsApp
+                <button onClick={comprarPorWhatsApp} className="w-full bg-[#D4AF37] text-[#050F24] font-bold text-xs tracking-[0.2em] py-4 rounded hover:opacity-90 transition-opacity uppercase text-center flex items-center justify-center gap-2 border-none cursor-pointer">
+                  📲 Confirmar Orden vía WhatsApp
                 </button>
               </div>
             </div>
@@ -520,9 +528,9 @@ export default function Home() {
       )}
 
       {/* PIE DE PÁGINA */}
-      <footer className="bg-[#030A1A] py-12 px-6 border-t border-white/5 text-center mt-24">
-        <p className="text-[10px] tracking-[0.25em] font-light text-slate-500 max-w-4xl mx-auto leading-relaxed uppercase">
-          AVISO LEGAL: Compuestos químicos destinados exclusivamente a fines de investigación in-vitro y desarrollo analítico. No aptos para uso clínico directo en humanos ni animales.
+      <footer className="bg-[#020714] py-14 px-6 border-t border-white/10 text-center mt-24">
+        <p className="text-[10px] tracking-[0.25em] font-light text-slate-400 max-w-4xl mx-auto leading-relaxed uppercase">
+          AVISO LEGAL: Compuestos químicos destinados exclusivamente a fines de investigación in-vitro y desarrollo analítico de laboratorio. No aptos para uso clínico humano ni veterinario directo.
         </p>
       </footer>
     </main>
