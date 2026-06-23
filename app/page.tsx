@@ -189,14 +189,13 @@ export default function Home() {
                     <div className="w-full h-56 mb-6 flex items-center justify-center bg-gradient-to-tr from-[#E8EEF5] to-white rounded-xl overflow-hidden border border-slate-100 relative">
                        {/* Si la imagen no carga, mostramos un fallback gris, pero si está, hace zoom al pasar el mouse */}
                        <img 
-                          src={prod.imagen} 
-                          alt={prod.nombre} 
-                          className="h-full w-auto object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500 z-10"
-                          onError={(e) => {
-                            // Fallback temporal si no subiste la foto aún
-                            e.currentTarget.src = "https://placehold.co/400x400/E8EEF5/0B1B3D?text=Foto+Pendiente";
-                          }}
-                       />
+                       src={prod.imagen} 
+                       alt={prod.nombre} 
+                       className="h-40 w-auto object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500 z-10 p-2"
+                       onError={(e) => {
+                       e.currentTarget.src = "https://placehold.co/400x400/E8EEF5/0B1B3D?text=Foto+Pendiente";
+                       }}
+                      />
                        {/* Decoración de fondo */}
                        <div className="absolute inset-0 bg-[#D4AF37] opacity-0 group-hover:opacity-5 transition-opacity duration-500"></div>
                     </div>
