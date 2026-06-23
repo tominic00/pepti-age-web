@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-// Inyección de estilos de tipografías premium para el laboratorio
+// Inyección de estilos de tipografías premium y parches de color blindados
 const EstilosTipografia = () => (
   <style jsx global>{`
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
@@ -188,10 +188,10 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#050F24] font-lab-texto text-slate-100 pb-20 relative overflow-x-hidden selection:bg-[#D4AF37]/30">
+    <main className="min-h-screen bg-[#050F24] font-lab-texto text-slate-100 pb-32 relative overflow-x-hidden selection:bg-[#D4AF37]/30">
       <EstilosTipografia />
       
-      {/* MENÚ DE NAVEGACIÓN TOTALMENTE EN ESPAÑOL */}
+      {/* MENÚ DE NAVEGACIÓN COMPATIBLE */}
       <header className="bg-[#050F24]/90 backdrop-blur-md text-white py-6 sticky top-0 z-50 border-b border-white/10 shadow-2xl">
         <div className="container mx-auto max-w-5xl px-6 flex justify-between items-center">
           <button onClick={() => setVista("inicio")} className="text-2xl md:text-3xl font-lab-titulo font-bold tracking-[0.2em] text-[#D4AF37] bg-transparent border-none cursor-pointer">
@@ -211,7 +211,7 @@ export default function Home() {
         </div>
       </header>
 
-      {/* MENÚ MÓVIL EN ESPAÑOL */}
+      {/* MENÚ MÓVIL */}
       <div className="md:hidden bg-[#0A1630] py-4 px-6 flex justify-around border-b border-white/10 text-xs tracking-wider font-medium text-slate-300">
         <button onClick={() => setVista("inicio")} className="bg-transparent border-none">Inicio</button>
         <button onClick={() => setVista("catalogo")} className="bg-transparent border-none">Productos</button>
@@ -221,13 +221,13 @@ export default function Home() {
 
       {/* ==================== VISTA 1: INICIO ==================== */}
       {vista === "inicio" && (
-        <>
-          {/* SECCIÓN BIENVENIDA */}
-          <section className="py-28 px-6 text-center max-w-4xl mx-auto relative space-y-6">
+        <div className="space-y-24">
+          {/* BIENVENIDA */}
+          <section className="py-24 px-6 text-center max-w-4xl mx-auto space-y-8">
             <h1 className="text-4xl md:text-7xl font-lab-titulo font-bold tracking-wide text-white leading-tight">
-              PEPTI AGE <span className="text-[#D4AF37] block mt-3 font-normal italic text-2xl md:text-5xl tracking-[0.15em]">BIENESTAR MOLECULAR</span>
+              PEPTI AGE <span className="text-[#D4AF37] block mt-4 font-normal italic text-2xl md:text-5xl tracking-[0.15em]">BIENESTAR MOLECULAR</span>
             </h1>
-            <p className="text-base md:text-xl max-w-2xl mx-auto text-slate-300 font-light leading-relaxed">
+            <p className="text-base md:text-xl max-w-2xl mx-auto font-light leading-relaxed" style={{ color: '#e2e8f0' }}>
               Péptidos liofilizados de grado de investigación con estándares de máxima pureza para optimización biológica.
             </p>
             <div className="pt-4">
@@ -237,53 +237,58 @@ export default function Home() {
             </div>
           </section>
 
-          {/* SECCIÓN: POR QUÉ ELEGIRNOS */}
+          {/* POR QUÉ ELEGIRNOS */}
           <section className="py-24 bg-[#08142D] border-y border-white/10 px-6">
-            <div className="container mx-auto max-w-5xl text-center space-y-4">
-              <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block">Beneficios de Laboratorio</span>
-              <h2 className="text-3xl md:text-5xl font-lab-titulo font-light tracking-wide text-white mb-16">EXCELENCIA EN INVESTIGACIÓN</h2>
+            <div className="container mx-auto max-w-5xl text-center space-y-16">
+              <div>
+                <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Beneficios de Laboratorio</span>
+                <h2 className="text-3xl md:text-5xl font-lab-titulo font-light tracking-wide text-white">EXCELENCIA EN INVESTIGACIÓN</h2>
+              </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-left pt-6">
-                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-3 shadow-xl">
-                  <span className="text-3xl block mb-2">💎</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-left">
+                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-4 shadow-xl">
+                  <span className="text-3xl block">💎</span>
                   <h4 className="font-lab-titulo text-xl text-[#D4AF37] font-semibold">Pureza 99%+ Garantizada</h4>
-                  <p className="text-sm text-slate-300 font-light leading-relaxed">Cada lote es sometido a estrictos análisis analíticos de espectrometría de masas y HPLC en laboratorios externos certificados.</p>
+                  <p className="text-sm font-light leading-relaxed" style={{ color: '#cbd5e1' }}>Cada lote es sometido a estrictos análisis analíticos de espectrometría de masas y HPLC en laboratorios externos certificados.</p>
                 </div>
-                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-3 shadow-xl">
-                  <span className="text-3xl block mb-2">📦</span>
+                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-4 shadow-xl">
+                  <span className="text-3xl block">📦</span>
                   <h4 className="font-lab-titulo text-xl text-[#D4AF37] font-semibold">Importación Directa USA</h4>
-                  <p className="text-sm text-slate-300 font-light leading-relaxed">Distribución e importación directa, resguardada de manera estricta bajo protocolos de cadena de frío continuo.</p>
+                  <p className="text-sm font-light leading-relaxed" style={{ color: '#cbd5e1' }}>Distribución e importación directa, resguardada de manera estricta bajo protocolos de cadena de frío continuo.</p>
                 </div>
-                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-3 shadow-xl">
-                  <span className="text-3xl block mb-2">🔬</span>
+                <div className="bg-[#050F24] p-8 rounded-xl border border-white/10 space-y-4 shadow-xl">
+                  <span className="text-3xl block">🔬</span>
                   <h4 className="font-lab-titulo text-xl text-[#D4AF37] font-semibold">Certificación Científica</h4>
-                  <p className="text-sm text-slate-300 font-light leading-relaxed">Transparencia absoluta. Fichas descriptivas y especificaciones basadas rigurosamente en literatura científica internacional.</p>
+                  <p className="text-sm font-light leading-relaxed" style={{ color: '#cbd5e1' }}>Transparencia absoluta. Fichas descriptivas y especificaciones basadas rigurosamente en literatura científica internacional.</p>
                 </div>
               </div>
             </div>
           </section>
 
-          {/* SECCIÓN: CARRUSEL DE COMPUESTOS DESTACADOS */}
-          <section className="py-24 px-6 container mx-auto max-w-4xl text-center space-y-4">
-            <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block">Selección Especial</span>
-            <h2 className="text-3xl md:text-4xl font-lab-titulo font-light text-white mb-12">COMPUESTOS DESTACADOS</h2>
+          {/* CARRUSEL DE COMPUESTOS DESTACADOS */}
+          <section className="py-12 px-6 container mx-auto max-w-4xl text-center space-y-12">
+            <div>
+              <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Selección Especial</span>
+              <h2 className="text-3xl md:text-4xl font-lab-titulo font-light text-white">COMPUESTOS DESTACADOS</h2>
+            </div>
             
-            <div className="bg-[#0A1630] p-8 md:p-10 rounded-2xl border border-[#D4AF37]/30 shadow-2xl flex flex-col md:flex-row items-center gap-10 text-left relative transition-all duration-500">
-              <div className="w-40 h-40 flex-shrink-0 bg-white rounded-xl p-3 flex items-center justify-center border border-[#D4AF37]/40 shadow-xl">
-                <img src={destacados[indexCarrusel].imagen} alt={destacados[indexCarrusel].nombre} className="h-full w-auto object-contain" />
+            <div className="bg-[#0A1630] p-8 md:p-12 rounded-2xl border border-[#D4AF37]/30 shadow-2xl flex flex-col md:flex-row items-center gap-10 text-left relative transition-all duration-500">
+              {/* CUADRO DE IMAGEN EN PAUSA VACÍO */}
+              <div className="w-36 h-36 flex-shrink-0 bg-transparent rounded-xl border border-[#D4AF37]/40 flex items-center justify-center text-center p-2 text-[10px] text-[#D4AF37] tracking-widest font-mono uppercase">
+                [ Vial Box ]
               </div>
-              <div className="flex-1 space-y-3">
+              <div className="flex-1 space-y-4">
                 <div className="flex justify-between items-baseline gap-4">
                   <h3 className="font-lab-titulo text-2xl font-bold text-[#D4AF37]">{destacados[indexCarrusel].nombre}</h3>
-                  <span className="text-white font-mono text-xl font-medium whitespace-nowrap">U$S {destacados[indexCarrusel].precio}</span>
+                  <span className="font-mono text-xl font-medium" style={{ color: '#ffffff' }}>U$S {destacados[indexCarrusel].precio}</span>
                 </div>
-                <p className="text-slate-200 text-base font-normal leading-relaxed">{destacados[indexCarrusel].descBreve}</p>
+                <p className="text-base font-normal leading-relaxed" style={{ color: '#e2e8f0' }}>{destacados[indexCarrusel].descBreve}</p>
                 <div className="flex gap-4 pt-4">
                   <button onClick={() => verDetalleProducto(destacados[indexCarrusel])} className="bg-transparent hover:bg-white/5 text-white py-2.5 px-6 rounded border border-white/30 text-xs tracking-widest uppercase transition-colors">
-                    Ver Detalles Completos
+                    Ver Detalles
                   </button>
-                  <button onClick={() => agregarAlCarrito(destacados[indexCarrusel])} className="bg-[#D4AF37] text-[#050F24] font-bold py-2.5 px-6 rounded text-xs tracking-widest uppercase hover:opacity-90 transition-opacity border-none cursor-pointer">
-                    Agregar al Pedido
+                  <button onClick={() => agregarAlCarrito(destacados[indexCarrusel])} className="bg-[#D4AF37] text-[#050F24] font-bold py-2.5 px-6 rounded text-xs tracking-widest uppercase border-none cursor-pointer">
+                    Añadir al Pedido
                   </button>
                 </div>
               </div>
@@ -295,41 +300,42 @@ export default function Home() {
               </div>
             </div>
           </section>
-        </>
+        </div>
       )}
 
       {/* ==================== VISTA 2: CATÁLOGO CON STOCK INCLUIDO ==================== */}
       {vista === "catalogo" && (
-        <section className="py-24 px-6 container mx-auto max-w-4xl space-y-12">
+        <section className="py-24 px-6 container mx-auto max-w-4xl space-y-16">
           <div className="text-center">
             <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Gama de Investigación</span>
             <h2 className="text-3xl md:text-5xl font-lab-titulo font-light text-white">TODOS LOS PÉPTIDOS</h2>
           </div>
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-12">
             {PRODUCTOS.map((prod) => (
-              <div key={prod.id} className="bg-[#0A1630]/70 backdrop-blur-sm p-6 rounded-2xl border border-white/10 flex flex-col md:flex-row gap-8 items-center group shadow-xl">
+              <div key={prod.id} className="bg-[#0A1630] p-8 rounded-2xl border border-white/10 flex flex-col md:flex-row gap-8 items-center shadow-xl transition-all duration-300 hover:border-[#D4AF37]/30">
                 
-                <div onClick={() => verDetalleProducto(prod)} className="w-36 h-36 flex-shrink-0 flex items-center justify-center bg-white rounded-xl border border-white/20 p-2 cursor-pointer relative group-hover:border-[#D4AF37]/50 transition-colors">
-                   <img src={prod.imagen} alt={prod.nombre} className="h-28 w-auto object-contain drop-shadow-md transition-transform duration-500 group-hover:scale-105" />
+                {/* CUADRO DE IMAGEN EN PAUSA VACÍO */}
+                <div className="w-32 h-32 flex-shrink-0 bg-transparent rounded-xl border border-white/20 flex items-center justify-center text-center p-2 text-[10px] text-slate-500 tracking-wider font-mono uppercase">
+                  [ Vial Box ]
                 </div>
 
-                <div className="flex-1 w-full flex flex-col text-left space-y-3">
+                <div className="flex-1 w-full flex flex-col text-left space-y-4">
                   <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                    <h4 onClick={() => verDetalleProducto(prod)} className="font-lab-titulo text-2xl font-bold text-[#D4AF37] hover:underline cursor-pointer transition-all">{prod.nombre}</h4>
+                    <h4 className="font-lab-titulo text-2xl font-bold text-[#D4AF37]">{prod.nombre}</h4>
                     <div className="flex items-center gap-4 self-start sm:self-auto">
                       {prod.stock === 0 ? (
                         <span className="text-[10px] tracking-widest uppercase font-bold text-red-400 bg-red-400/10 px-2.5 py-1 rounded border border-red-400/30">Sin Stock</span>
                       ) : (
                         <span className="text-[10px] tracking-widest uppercase font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded border border-emerald-400/30">Disponible ({prod.stock})</span>
                       )}
-                      <span className="font-mono text-xl font-medium text-white">U$S {prod.precio}</span>
+                      <span className="font-mono text-xl font-medium" style={{ color: '#ffffff' }}>U$S {prod.precio}</span>
                     </div>
                   </div>
                   
-                  <p className="text-slate-200 text-base font-normal leading-relaxed">{prod.descBreve}</p>
+                  <p className="text-base font-normal leading-relaxed" style={{ color: '#e2e8f0' }}>{prod.descBreve}</p>
                   
-                  <div className="flex justify-between items-center pt-2 gap-4">
+                  <div className="flex justify-between items-center pt-4 border-t border-white/5 gap-4">
                     <button onClick={() => verDetalleProducto(prod)} className="text-xs font-semibold text-slate-400 hover:text-white transition-colors uppercase tracking-wider bg-transparent border-none cursor-pointer">
                       Ver Especificaciones Ficha →
                     </button>
@@ -356,15 +362,17 @@ export default function Home() {
             ← Volver al Catálogo
           </button>
 
-          <div className="bg-[#0A1630] p-8 md:p-10 rounded-2xl border border-white/10 shadow-2xl space-y-10">
+          <div className="bg-[#0A1630] p-8 md:p-10 rounded-2xl border border-white/10 shadow-2xl space-y-12">
             <div className="flex flex-col md:flex-row gap-10 items-center md:items-start border-b border-white/10 pb-10">
-              <div className="w-52 h-56 bg-white rounded-xl flex items-center justify-center border border-white/20 p-4 shadow-xl flex-shrink-0">
-                <img src={productoSeleccionado.imagen} alt={productoSeleccionado.nombre} className="h-full w-auto object-contain" />
+              {/* CUADRO DE IMAGEN EN PAUSA VACÍO */}
+              <div className="w-48 h-48 bg-transparent rounded-xl border border-white/20 flex items-center justify-center text-center p-2 text-xs text-slate-500 tracking-wider font-mono uppercase flex-shrink-0">
+                [ Vial Box ]
               </div>
+              
               <div className="flex-1 w-full space-y-4 text-left">
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
                   <h2 className="text-3xl md:text-4xl font-lab-titulo font-bold text-[#D4AF37]">{productoSeleccionado.nombre}</h2>
-                  <span className="text-white font-mono text-3xl font-medium">U$S {productoSeleccionado.precio}</span>
+                  <span className="font-mono text-3xl font-medium" style={{ color: '#ffffff' }}>U$S {productoSeleccionado.precio}</span>
                 </div>
                 <div>
                   {productoSeleccionado.stock === 0 ? (
@@ -373,7 +381,7 @@ export default function Home() {
                     <span className="text-xs tracking-widest uppercase font-bold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded border border-emerald-400/20">Unidades en Reserva Logística: {productoSeleccionado.stock}</span>
                   )}
                 </div>
-                <p className="text-slate-200 text-lg font-normal leading-relaxed pt-2">{productoSeleccionado.descBreve}</p>
+                <p className="text-lg font-normal leading-relaxed pt-2" style={{ color: '#e2e8f0' }}>{productoSeleccionado.descBreve}</p>
                 <div className="pt-4">
                   <button 
                     onClick={() => agregarAlCarrito(productoSeleccionado)} 
@@ -386,22 +394,22 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="text-left space-y-8 pt-2">
-              <div className="space-y-2">
+            <div className="text-left space-y-10 pt-4">
+              <div className="space-y-3">
                 <h4 className="text-xs tracking-[0.25em] font-semibold text-[#D4AF37] uppercase">Mecanismo Molecular de Acción</h4>
-                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base text-slate-200 font-light leading-relaxed">
+                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base font-light leading-relaxed" style={{ color: '#e2e8f0' }}>
                   {productoSeleccionado.mecanismo}
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h4 className="text-xs tracking-[0.25em] font-semibold text-[#D4AF37] uppercase">Información de Investigación y Datos Clínicos</h4>
-                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base text-slate-200 font-light leading-relaxed">
+                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base font-light leading-relaxed" style={{ color: '#e2e8f0' }}>
                   {productoSeleccionado.research}
                 </div>
               </div>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h4 className="text-xs tracking-[0.25em] font-semibold text-[#D4AF37] uppercase">Pautas de Reconstitución y Protocolo de Dosificación</h4>
-                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base text-slate-200 font-light leading-relaxed">
+                <div className="bg-[#050F24] p-6 rounded-xl border border-white/5 text-base font-light leading-relaxed" style={{ color: '#e2e8f0' }}>
                   {productoSeleccionado.dosis}
                 </div>
               </div>
@@ -417,7 +425,7 @@ export default function Home() {
             <span className="text-xs tracking-[0.4em] text-[#D4AF37] font-semibold uppercase block mb-2">Trayectoria y Confianza</span>
             <h2 className="text-3xl md:text-5xl font-lab-titulo font-light text-white">QUIÉNES SOMOS</h2>
           </div>
-          <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/10 space-y-6 text-slate-200 font-normal text-base leading-relaxed shadow-2xl">
+          <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/10 space-y-6 font-normal text-base leading-relaxed shadow-2xl" style={{ color: '#e2e8f0' }}>
             <p>
               En <strong className="text-white font-medium">Pepti Age</strong> nos dedicamos a la distribución de péptidos liofilizados de grado de investigación con los más altos estándares de pureza del mercado, actuando como canal logístico directo de laboratorios consolidados en Estados Unidos como <strong className="text-[#D4AF37]">RxWellHealth</strong>.
             </p>
@@ -446,7 +454,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-5xl font-lab-titulo font-light text-white">COMUNICATE CON NOSOTROS</h2>
           </div>
           <div className="bg-[#0A1630] p-8 rounded-2xl border border-white/10 space-y-6 shadow-2xl">
-            <p className="text-slate-200 font-normal text-center leading-relaxed text-sm">
+            <p className="font-normal text-center leading-relaxed text-sm" style={{ color: '#e2e8f0' }}>
               Si sos profesional de la salud, investigador científico o necesitas asistencia logística masiva con la adquisición y dosificación, ponte en contacto directo con nuestros asesores.
             </p>
             <div className="space-y-4 pt-2">
@@ -465,7 +473,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            <div className="pt-2">
+            <div className="pt-4">
               <button onClick={() => window.open("https://wa.me/5493815450641", "_blank")} className="w-full bg-[#D4AF37] text-[#050F24] font-bold text-xs tracking-[0.2em] py-4 rounded uppercase border-none cursor-pointer hover:opacity-90 transition-opacity">
                 Abrir Mensaje de WhatsApp
               </button>
